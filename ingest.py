@@ -13,8 +13,11 @@ from sentence_transformers import SentenceTransformer
 COLLECTION_NAME = "docs"
 DOC_FOLDER = "example_docs"
 
+QDRANT_HOST=os.getenv("QDRANT_HOST")
+QDRANT_PORT=os.getenv("QDRANT_PORT")
+
 # Init Qdrant client and embedding model
-qdrant = QdrantClient(host="localhost", port=6333)
+qdrant = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 def create_collection_if_not_exists():

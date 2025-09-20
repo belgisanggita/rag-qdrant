@@ -8,8 +8,11 @@ load_dotenv()  # Load GROQ_API_KEY dari .env
 
 COLLECTION_NAME = "docs"
 
-# Init Qdrant dan embedding model
-qdrant = QdrantClient(host="localhost", port=6333)
+QDRANT_HOST=os.getenv("QDRANT_HOST")
+QDRANT_PORT=os.getenv("QDRANT_PORT")
+
+# Init Qdrant client and embedding model
+qdrant = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 # Init Groq client
