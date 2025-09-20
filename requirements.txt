@@ -4,3 +4,4 @@ qdrant-client
 sentence-transformers
 groq
 python-dotenv
+watchdog
