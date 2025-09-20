@@ -11,6 +11,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: rag:latest
     container_name: rag
     ports:
       - "8000:8000"
@@ -19,7 +20,7 @@ services:
     volumes:
       - ./example_docs:/app/example_docs
     environment:
-      - GROQ_API_KEY=YOUR_GROQ_API_KEY_HERE
+      - GROQ_API_KEY=YOUR_API_KEY_HERE
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
 
