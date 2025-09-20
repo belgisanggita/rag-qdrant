@@ -24,7 +24,7 @@ class IngestHandler(FileSystemEventHandler):
 
     def run_ingest(self):
         print("[Ingesting] Running ingest.py...")
-        subprocess.run(["python", "ingest.py"])  # atau sesuaikan path
+        subprocess.run(["python", "ingest.py"])
 
 def start_watcher():
     event_handler = IngestHandler()

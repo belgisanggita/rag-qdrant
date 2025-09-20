@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer
 from groq import Groq
 from dotenv import load_dotenv
 
-load_dotenv()  # Load GROQ_API_KEY dari .env
+load_dotenv()
 
 COLLECTION_NAME = "docs"
 

@@ -16,7 +16,6 @@ DOC_FOLDER = "example_docs"
 QDRANT_HOST=os.getenv("QDRANT_HOST")
 QDRANT_PORT=os.getenv("QDRANT_PORT")
 
-# Init Qdrant client and embedding model
 qdrant = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
@@ -34,24 +33,21 @@ def create_collection_if_not_exists():
         print("Collection already exists. Skipping creation.")
 
 def ingest_documents(folder=DOC_FOLDER):
-    # Ambil semua file .txt yang ada di folder lokal
     local_files = {f for f in os.listdir(folder) if f.endswith(".txt")}
 
-    # Ambil semua dokumen yang sudah di-ingest ke Qdrant
     points, _ = qdrant.scroll(
         collection_name=COLLECTION_NAME,
         with_payload=True,
-        limit=10000  # Ubah sesuai jumlah dokumen
+        limit=10000  
     )
 
-    # Buat mapping source filename -> point_id dari Qdrant
     existing_sources = {}
     for point in points:
         source = point.payload.get("source")
         if source:
             existing_sources[source] = point.id
 
-    # 1️⃣ DELETE dokumen dari Qdrant jika file-nya sudah tidak ada
+    # 1️ DELETE dokumen dari Qdrant jika file-nya sudah tidak ada
     deleted = 0
     for source, point_id in existing_sources.items():
         if source not in local_files:
@@ -62,7 +58,7 @@ def ingest_documents(folder=DOC_FOLDER):
             print(f"DELETED from Qdrant: {source}")
             deleted += 1
 
-    # 2️⃣ INGEST file baru yang belum ada
+    # 2️ INGEST file baru yang belum ada
     new_documents = []
     for filename in local_files:
         if filename in existing_sources:
