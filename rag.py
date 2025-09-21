@@ -31,7 +31,12 @@ def generate_answer_with_groq(question: str, context: str):
     prompt = f"Context: {context}\n\nQuestion: {question}\nAnswer:"
     chat_completion = groq.chat.completions.create(
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": (
+                "You are a knowledgeable assistant that only answers questions "
+                "based on the provided context. Do not use outside knowledge. "
+                "If the answer is not in the context, respond with "
+                "I'm sorry, I cannot answer that based on the provided information."
+            )},
             {"role": "user", "content": prompt},
         ],
         model="llama-3.3-70b-versatile",
