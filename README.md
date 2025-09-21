@@ -250,15 +250,6 @@ Access Qdrant's web interface at `http://localhost:6333/dashboard`
    - Check Qdrant dashboard for indexed points
    - Try more specific questions related to your document content
 
-### Reset Database
-
-To start fresh:
-
-```bash
-docker-compose down -v  # Remove volumes
-docker-compose up --build
-```
-
 ## Performance Considerations
 
 - **Embedding Model**: all-MiniLM-L6-v2 provides good balance of speed vs accuracy
