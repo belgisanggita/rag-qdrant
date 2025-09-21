@@ -137,10 +137,6 @@ Here's an example of using the API with Postman: *Example POST request to `/ask`
 
 *Sample response showing generated answer and context used*
 
-### Interactive API Docs
-
-Once the service is running, visit `http://localhost:8000/docs` for interactive API documentation.
-
 ## Components
 
 ### Document Ingestion (`ingest.py`)
