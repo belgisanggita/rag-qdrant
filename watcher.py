@@ -7,20 +7,33 @@ import subprocess
 WATCH_FOLDER = "example_docs"
 
 class IngestHandler(FileSystemEventHandler):
+    def __init__(self, debounce_seconds=1):
+        super().__init__()
+        self.debounce_seconds = debounce_seconds
+        self._timer = None
+        self._lock = threading.Lock()
+
     def on_modified(self, event):
         if event.src_path.endswith(".txt"):
             print(f"[MODIFIED] {event.src_path}")
-            self.run_ingest()
+            self._debounced_run()
 
     def on_created(self, event):
         if event.src_path.endswith(".txt"):
             print(f"[CREATED] {event.src_path}")
-            self.run_ingest()
+            self._debounced_run()
 
     def on_deleted(self, event):
         if event.src_path.endswith(".txt"):
             print(f"[DELETED] {event.src_path}")
-            self.run_ingest()
+            self._debounced_run()
+
+    def _debounced_run(self):
+        with self._lock:
+            if self._timer:
+                self._timer.cancel()
+            self._timer = threading.Timer(self.debounce_seconds, self.run_ingest)
+            self._timer.start()
 
     def run_ingest(self):
         print("[Ingesting] Running ingest.py...")
@@ -38,3 +51,6 @@ def start_watcher():
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
+if __name__ == "__main__":
+    start_watcher()

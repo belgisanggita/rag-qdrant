@@ -1,5 +1,6 @@
 #!/bin/bash
 
+curl -s -X DELETE http://${QDRANT_HOST}:${QDRANT_PORT}/collections/docs &> /dev/null
 echo "Running document ingestion..."
 python ingest.py
 

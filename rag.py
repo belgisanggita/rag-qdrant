@@ -45,9 +45,8 @@ def generate_answer_with_groq(question: str, context: str):
 
 def generate_answer(question: str):
     documents = search_similar_documents(question)
-    context = "\n".join(documents)
-    answer = generate_answer_with_groq(question, context)
+    answer = generate_answer_with_groq(question, documents[0])
     return {
         "answer": answer,
-        "context_used": context
+        "context_used": documents[0]
     }
